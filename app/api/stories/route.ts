@@ -1,7 +1,7 @@
 export const dynamic = 'force-static'
 
 import { stories } from "@/data/story-data";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 // TODO
 // Only allow request from my app domain
 // Secret key in request
@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 // Get all stories (SORTED BY DATE)
-export async function GET(request: NextRequest, response: NextResponse) {
+export async function GET() {
     
     // Check the secret key in the Req Auth
     // Query the database

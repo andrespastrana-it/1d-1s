@@ -37,7 +37,8 @@ export default async function handler(
 ) {
   // Run the middleware
   await runMiddleware(req, res, cors);
-
+  console.log("Cron job received in the client");
+  
   // Rest of the API logic
   res.json({ message: "Hello Everyone!" });
 }

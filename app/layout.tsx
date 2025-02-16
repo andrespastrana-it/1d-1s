@@ -8,11 +8,11 @@ const quicksand = Quicksand({
   display: "swap",
 });
 
-const bungeeshaed = Bungee_Shade({
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
-});
+// const bungeeshaed = Bungee_Shade({
+//   weight: "400",
+//   subsets: ["latin"],
+//   display: "swap",
+// });
 
 export const metadata = {
   title: "One Day, One History - A Journey Through Time",

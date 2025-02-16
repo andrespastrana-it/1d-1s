@@ -1,27 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// Initializing the cors middleware
-// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+
+// Initialize the cors middleware
 const cors = Cors({
   origin: "*",
   methods: ["GET"],
-
 });
 
+// Define an explicit type for the middleware function
+type MiddlewareFunction = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  callback: (result: any) => void
+) => void;
+
 // Helper method to wait for a middleware to execute before continuing
-// And to throw an error when an error happens in a middleware
 function runMiddleware(
   req: NextApiRequest,
   res: NextApiResponse,
-  fn: Function,
-) {
+  fn: MiddlewareFunction
+): Promise<unknown> {
   return new Promise((resolve, reject) => {
     fn(req, res, (result: any) => {
       if (result instanceof Error) {
         return reject(result);
       }
-
       return resolve(result);
     });
   });
@@ -29,7 +33,7 @@ function runMiddleware(
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   // Run the middleware
   await runMiddleware(req, res, cors);

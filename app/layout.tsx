@@ -1,9 +1,15 @@
 import type React from "react";
 import "./globals.css";
-import { Quicksand } from "next/font/google";
+import { Quicksand, Bungee_Shade } from "next/font/google";
 
 const quicksand = Quicksand({
   weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const bungeeshaed = Bungee_Shade({
+  weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
@@ -21,12 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+      <head></head>
       <body className={quicksand.className}>{children}</body>
     </html>
   );

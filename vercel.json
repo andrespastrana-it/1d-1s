@@ -1,0 +1,9 @@
+{
+    "crons": [
+      {
+        "path": "/api/stories/cron",
+        "schedule": "* * * * *"
+      }
+     
+    ]
+  }

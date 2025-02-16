@@ -5,7 +5,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext({
   theme: "default",
-  setTheme: (theme: string) => {},
+  setTheme: (_theme: string) => {},
 });
 
 export const useTheme = () => useContext(ThemeContext);

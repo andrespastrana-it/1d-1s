@@ -1,4 +1,5 @@
 import { stories } from "@/data/story-data";
+import { Story } from "@/lib/models";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -6,12 +7,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest,   { params }: { params: Promise<{ id: string }> }) {
     // Check the autorization in the headers
     
-    //Valdiate params  
     const id = (await params).id
+    // Validate params  as a mongo id
+
+     const story = await Story.findById(id)
     
      //    Query the database
 
 
     //  Return the response
-     return NextResponse.json({success: true,error:false,data: stories[Number(id)]})
+     return NextResponse.json({success: true,error:false,data: story})
 }

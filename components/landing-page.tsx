@@ -60,7 +60,13 @@ export default function LandingPage() {
   )
 }
 
-function FeatureCard({ icon, title, description }) {
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
     <div className="bg-white bg-opacity-10 p-6 rounded-lg text-center hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
       {icon}

@@ -1,0 +1,28 @@
+import StoryDetails from "@/components/story-details";
+import type { Story } from "@/lib/types";
+import Image from "next/image";
+
+export default async function StoryDetail({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = await params;
+  // Get the story details
+  const resp = await fetch(`http://localhost:3000/api/stories/${id}`);
+
+  const { data } = await resp.json();
+  const { ui_metadata } = data as Story;
+
+  const pageStyle = {
+    backgroundColor: ui_metadata.background_color,
+    color: ui_metadata.text_color,
+    fontFamily: ui_metadata.font,
+  };
+
+  return (
+    <div className="min-h-screen py-8" style={pageStyle}>
+      <StoryDetails story={data} />
+    </div>
+  );
+}

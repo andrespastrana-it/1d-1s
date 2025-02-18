@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Book, Calendar, Globe, ArrowRight } from "lucide-react"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import { Book, Calendar, Globe, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
+  const router = useRouter();
   return (
     <div className="flex-grow flex flex-col items-center justify-center py-12 px-4 text-white">
       <motion.h1
@@ -22,7 +24,8 @@ export default function LandingPage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.8 }}
       >
-        Embark on a daily journey through time, exploring captivating stories of human triumph and resilience.
+        Embark on a daily journey through time, exploring captivating stories of
+        human triumph and resilience.
       </motion.p>
 
       <motion.div
@@ -48,16 +51,20 @@ export default function LandingPage() {
         />
       </motion.div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.8 }}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
         <Link
-          href="/story"
+          href="/stories"
           className="bg-yellow-300 text-purple-900 px-8 py-4 rounded-full text-xl font-bold flex items-center hover:bg-yellow-400 transition-colors duration-300"
         >
           Start Your Journey <ArrowRight className="ml-2" />
         </Link>
       </motion.div>
     </div>
-  )
+  );
 }
 
 interface FeatureCardProps {
@@ -73,6 +80,5 @@ function FeatureCard({ icon, title, description }: FeatureCardProps) {
       <h2 className="text-xl font-bold mb-2 font-bungee">{title}</h2>
       <p>{description}</p>
     </div>
-  )
+  );
 }
-

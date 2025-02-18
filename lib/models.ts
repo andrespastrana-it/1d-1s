@@ -1,4 +1,4 @@
-import  { Schema, Document, model } from 'mongoose';
+import  mongoose, { Schema, Document, model } from 'mongoose';
 
 // Define the TypeScript interface for the Story document
 export interface IStory extends Document {
@@ -52,8 +52,10 @@ export interface IStory extends Document {
   { timestamps: true }
 );
 
+
 // Create and export the Mongoose model
-export const Story = model<IStory>('Story', StorySchema);
+export const Story = mongoose.models.Story ||  model<IStory>('Story', StorySchema);
+
 
 
 

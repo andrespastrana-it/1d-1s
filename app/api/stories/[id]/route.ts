@@ -1,4 +1,4 @@
-import { stories } from "@/data/story-data";
+
 import { Story } from "@/lib/models";
 import { NextRequest, NextResponse } from "next/server";
 

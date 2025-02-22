@@ -3,13 +3,14 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { getStoryGenerationPrompt } from "./helpers";
 import {  Story } from "./models";
+import type {Story as StoryZod} from '@/lib/validations'
 import { PaginationParams, StoryEntity, StoryMetadataForPrompt } from "./types";
 import { storyCriteriaChecks } from "./queries";
 
 
 
 
-export const isStoryDuplicated = async (story: any): Promise<boolean> => {
+export const isStoryDuplicated = async (story: StoryZod): Promise<boolean> => {
   const checks = [
     storyCriteriaChecks.checkTitleDateCharacter(story),
     storyCriteriaChecks.checkEventLocation(story),

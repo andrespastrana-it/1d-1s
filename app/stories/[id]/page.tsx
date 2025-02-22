@@ -1,6 +1,6 @@
 import StoryDetails from "@/components/story-details";
 import { get_story_by_id } from "@/lib/actions";
-import { IStory } from "@/lib/models";
+import type { StoryEntity } from "@/lib/types";
 
 export default async function StoryDetail({
   params,
@@ -10,7 +10,7 @@ export default async function StoryDetail({
   const { id } = await params; // ✅ Now this works because params is a Promise
   const data = await get_story_by_id(id);
 
-  const { ui_metadata } = data as IStory;
+  const { ui_metadata } = data as StoryEntity;
 
   const pageStyle = {
     backgroundColor: ui_metadata.background_color,

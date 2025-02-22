@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { Story, StoryList } from "@/lib/types";
 export function StoryCard({ story }: { story: Story }) {
-  const { ui_metadata, title, date, summary, _id } = story;
+  console.log(story);
 
+  const { ui_metadata, title, date, summary, _id } = story;
 
   const cardStyle = {
     backgroundColor: ui_metadata.background_color,

@@ -7,10 +7,6 @@ const page = async () => {
   const resp = await fetch(`${NEXT_HOST}api/stories/`);
   const { data } = await resp.json();
 
-  console.log("All the stories ");
-  console.log(data);
-  console.log("********");
-
   return (
     <div>
       <Stories stories={data} />

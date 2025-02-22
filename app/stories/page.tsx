@@ -1,4 +1,3 @@
-import React from "react";
 import Stories from "@/components/story-list";
 
 const page = async () => {

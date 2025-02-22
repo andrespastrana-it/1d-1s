@@ -56,7 +56,7 @@ export const getPaginatedStoriesMetadata = async ({ page, pageSize }: Pagination
 };
 
 // Create a story using AI based on provided metadata
-export const create_story_ai = async (key: string, metadata: StoryMetadataForPrompt[]): Promise<any> => {
+export const create_story_ai = async (key: string, metadata: StoryMetadataForPrompt[]): Promise<unknown> => {
   const openai = createOpenAI({
     apiKey: key,
     compatibility: "strict",

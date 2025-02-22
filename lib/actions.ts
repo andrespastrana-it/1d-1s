@@ -7,9 +7,8 @@ import { storyCriteriaChecks } from "./queries";
 
 
 
-
-
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+//TODO: Fix typo error here
 export const isStoryDuplicated = async (story: any): Promise<boolean> => {
   const checks = [
     storyCriteriaChecks.checkTitleDateCharacter(story),

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Quote } from "lucide-react";
 import StoryProgress from "./story-progress";
@@ -10,7 +9,7 @@ import type { Story } from "@/lib/types";
 
 export default function StoryDetail({ story }: { story: Story }) {
   const [currentSection, setCurrentSection] = useState(0);
-  const [showReflection, setShowReflection] = useState(false);
+  const [, setShowReflection] = useState(false);
 
   const {
     ui_metadata,

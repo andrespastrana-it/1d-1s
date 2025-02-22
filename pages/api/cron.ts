@@ -4,6 +4,9 @@ import { validateStory } from "@/lib/validations";
 import { create_story_ai, getPaginatedStoriesMetadata, isStoryDuplicated } from "@/lib/actions";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // Initialize the cors middleware
 const cors = Cors({
   origin: "*",

@@ -1,6 +1,5 @@
 import StoryDetails from "@/components/story-details";
 import type { Story } from "@/lib/types";
-import Image from "next/image";
 
 export default async function StoryDetail({
   params,
@@ -8,8 +7,11 @@ export default async function StoryDetail({
   params: { id: string };
 }) {
   const { id } = await params;
+
+  const NEXT_HOST = process.env.NEXT_HOST;
+
   // Get the story details
-  const resp = await fetch(`http://localhost:3000/api/stories/${id}`);
+  const resp = await fetch(`${NEXT_HOST}api/stories/${id}`);
 
   const { data } = await resp.json();
   const { ui_metadata } = data as Story;

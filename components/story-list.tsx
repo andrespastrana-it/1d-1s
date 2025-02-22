@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Story, StoryList } from "@/lib/types";
 export function StoryCard({ story }: { story: Story }) {
   const { ui_metadata, title, date, summary, _id } = story;

@@ -11,7 +11,7 @@ export default async function StoryDetail({
   const NEXT_HOST = process.env.NEXT_HOST;
 
   // Get the story details
-  const resp = await fetch(`${NEXT_HOST}/api/stories/${id}`);
+  const resp = await fetch(`${NEXT_HOST}api/stories/${id}`);
 
   const { data } = await resp.json();
   const { ui_metadata } = data as Story;

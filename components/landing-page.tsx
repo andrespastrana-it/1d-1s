@@ -3,10 +3,13 @@
 import { motion } from "framer-motion";
 import { Book, Calendar, Globe, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
 
 export default function LandingPage() {
-  const router = useRouter();
   return (
     <div className="flex-grow flex flex-col items-center justify-center py-12 px-4 text-white">
       <motion.h1
@@ -65,12 +68,6 @@ export default function LandingPage() {
       </motion.div>
     </div>
   );
-}
-
-interface FeatureCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
 }
 
 function FeatureCard({ icon, title, description }: FeatureCardProps) {

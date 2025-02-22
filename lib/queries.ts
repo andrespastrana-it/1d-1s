@@ -1,145 +1,130 @@
-import { Story } from '@/lib/models';
+import { Story as StoryModel } from "@/lib/models"; // For runtime use
+import type { Story as StoryType } from "@/lib/validations"; // For type use
 
-// LOT OF DB QUERIES TO FIND A DUPLICATED STORY
-
-
-
-export const checkTitleDateCharacter = async (story: any): Promise<boolean> => {
+export const checkTitleDateCharacter = async (story: StoryType): Promise<boolean> => {
   const { title, date, main_character } = story;
   
-  // Check for Title + Date + Main Character match
-  const storyByTitleDateCharacter = await Story.findOne({
+  const storyByTitleDateCharacter = await StoryModel.findOne({
     title: title.toLowerCase(),
     date: date,
     main_character: main_character.toLowerCase(),
   });
 
-  return !!storyByTitleDateCharacter; // Return true if a story with matching criteria is found
+  return !!storyByTitleDateCharacter;
 };
 
-export const checkEventLocation = async (story: any): Promise<boolean> => {
+export const checkEventLocation = async (story: StoryType): Promise<boolean> => {
   const { historical_event, location } = story;
   
-  // Check for Historical Event + Location match
-  const storyByEventLocation = await Story.findOne({
+  const storyByEventLocation = await StoryModel.findOne({
     historical_event: historical_event.toLowerCase(),
     location: location.toLowerCase(),
   });
 
-  return !!storyByEventLocation; // Return true if a story with matching criteria is found
+  return !!storyByEventLocation;
 };
 
-export const checkTitleKeywords = async (story: any): Promise<boolean> => {
+export const checkTitleKeywords = async (story: StoryType): Promise<boolean> => {
   const { title, metadata: { keywords } } = story;
   
-  // Check for Title + Keywords match
-  const storyByKeywords = await Story.findOne({
+  const storyByKeywords = await StoryModel.findOne({
     title: title.toLowerCase(),
     'metadata.keywords': { $in: keywords.map((k: string) => k.toLowerCase()) },
   });
 
-  return !!storyByKeywords; // Return true if a story with matching criteria is found
+  return !!storyByKeywords;
 };
 
-export const checkTitleMotivationalMessage = async (story: any): Promise<boolean> => {
+export const checkTitleMotivationalMessage = async (story: StoryType): Promise<boolean> => {
   const { title, motivational_message } = story;
     
-  // Check for Title + Motivational Message match
-  const storyByTitleMessage = await Story.findOne({
+  const storyByTitleMessage = await StoryModel.findOne({
     title: title.toLowerCase(),
     motivational_message: motivational_message.toLowerCase(),
   });
   
-  return !!storyByTitleMessage; // Return true if a story with matching criteria is found
+  return !!storyByTitleMessage;
 };
 
-export const checkLocationSummary = async (story: any): Promise<boolean> => {
+export const checkLocationSummary = async (story: StoryType): Promise<boolean> => {
   const { location, summary } = story;
     
-  // Check for Location + Summary match
-  const storyByLocationSummary = await Story.findOne({
+  const storyByLocationSummary = await StoryModel.findOne({
     location: location.toLowerCase(),
     summary: summary.toLowerCase(),
   });
   
-  return !!storyByLocationSummary; // Return true if a story with matching criteria is found
+  return !!storyByLocationSummary;
 };
 
-export const checkKeywordsMainCharacter = async (story: any): Promise<boolean> => {
+export const checkKeywordsMainCharacter = async (story: StoryType): Promise<boolean> => {
   const { metadata: { keywords }, main_character } = story;
     
-  // Check for Keywords + Main Character match
-  const storyByKeywordsCharacter = await Story.findOne({
+  const storyByKeywordsCharacter = await StoryModel.findOne({
     main_character: main_character.toLowerCase(),
     'metadata.keywords': { $in: keywords.map((k: string) => k.toLowerCase()) },
   });
   
-  return !!storyByKeywordsCharacter; // Return true if a story with matching criteria is found
+  return !!storyByKeywordsCharacter;
 };
 
-export const checkTitleFullStory = async (story: any): Promise<boolean> => {
+export const checkTitleFullStory = async (story: StoryType): Promise<boolean> => {
   const { title, full_story } = story;
     
-  // Check for Title + Full Story match
-  const storyByTitleFullStory = await Story.findOne({
+  const storyByTitleFullStory = await StoryModel.findOne({
     title: title.toLowerCase(),
     full_story: full_story.toLowerCase(),
   });
   
-  return !!storyByTitleFullStory; // Return true if a story with matching criteria is found
+  return !!storyByTitleFullStory;
 };
 
-export const checkEventMotivationalMessage = async (story: any): Promise<boolean> => {
+export const checkEventMotivationalMessage = async (story: StoryType): Promise<boolean> => {
   const { historical_event, motivational_message } = story;
     
-  // Check for Historical Event + Motivational Message match
-  const storyByEventMessage = await Story.findOne({
+  const storyByEventMessage = await StoryModel.findOne({
     historical_event: historical_event.toLowerCase(),
     motivational_message: motivational_message.toLowerCase(),
   });
   
-  return !!storyByEventMessage; // Return true if a story with matching criteria is found
+  return !!storyByEventMessage;
 };
 
-export const checkEventLocationSummary = async (story: any): Promise<boolean> => {
+export const checkEventLocationSummary = async (story: StoryType): Promise<boolean> => {
   const { historical_event, location, summary } = story;
     
-  // Check for Historical Event + Location + Summary match
-  const storyByEventLocationSummary = await Story.findOne({
+  const storyByEventLocationSummary = await StoryModel.findOne({
     historical_event: historical_event.toLowerCase(),
     location: location.toLowerCase(),
     summary: summary.toLowerCase(),
   });
   
-  return !!storyByEventLocationSummary; // Return true if a story with matching criteria is found
+  return !!storyByEventLocationSummary;
 };
 
-export const checkDateKeywords = async (story: any): Promise<boolean> => {
+export const checkDateKeywords = async (story: StoryType): Promise<boolean> => {
   const { date, metadata: { keywords } } = story;
     
-  // Check for Date + Keywords match
-  const storyByDateKeywords = await Story.findOne({
+  const storyByDateKeywords = await StoryModel.findOne({
     date: date,
     'metadata.keywords': { $in: keywords.map((k: string) => k.toLowerCase()) },
   });
   
-  return !!storyByDateKeywords; // Return true if a story with matching criteria is found
+  return !!storyByDateKeywords;
 };
 
-export const checkEventLocationMessage = async (story: any): Promise<boolean> => {
+export const checkEventLocationMessage = async (story: StoryType): Promise<boolean> => {
   const { historical_event, location, motivational_message } = story;
     
-  // Check for Historical Event + Location + Motivational Message match
-  const storyByEventLocationMessage = await Story.findOne({
+  const storyByEventLocationMessage = await StoryModel.findOne({
     historical_event: historical_event.toLowerCase(),
     location: location.toLowerCase(),
     motivational_message: motivational_message.toLowerCase(),
   });
   
-  return !!storyByEventLocationMessage; // Return true if a story with matching criteria is found
+  return !!storyByEventLocationMessage;
 };
 
-// Export all functions in an object
 export const storyCriteriaChecks = {
   checkTitleDateCharacter,
   checkEventLocation,

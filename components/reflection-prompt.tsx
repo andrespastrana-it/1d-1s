@@ -31,8 +31,8 @@ export default function ReflectionPrompt({
     >
       <h2 className="text-2xl font-bold mb-4">Reflect on Your Journey</h2>
       <p className="mb-4">
-        You've just learned about the {historical_event}. How does this story
-        relate to your life or the world today? Consider themes like{" "}
+        You&apos;ve just learned about the {historical_event}. How does this
+        story relate to your life or the world today? Consider themes like{" "}
         {themes.join(", ")}.
       </p>
       <form onSubmit={handleSubmit}>

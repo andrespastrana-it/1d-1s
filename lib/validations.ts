@@ -1,4 +1,3 @@
-import { error } from "console";
 import { z } from "zod";
 
 const storySchema = z.object({
@@ -36,10 +35,8 @@ export type Story = z.infer<typeof storySchema>;
 export const validateStory = (data: unknown) => {
   const result = storySchema.safeParse(data);
   if (result.success) {
-    return result.data;
+    return result.data as Story;
   }  
-
-  console.log(result.error.errors);
   
   throw new Error(`Invalid story data ${ result.error.format()}`)
 

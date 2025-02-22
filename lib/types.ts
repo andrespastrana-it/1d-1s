@@ -1,3 +1,11 @@
+
+export  interface PaginationParams {
+  page: number;  
+  pageSize: number;
+}
+
+
+
 export type StoryMetadata = {
     themes: string[];
     keywords: string[];
@@ -27,6 +35,13 @@ export type StoryMetadata = {
     createdAt: string; // ISO timestamp
     updatedAt: string; // ISO timestamp
   };
+
+ export  interface StoryMetadataForPrompt {
+    title: string;
+    keywords: string[];
+    main_character: string;
+  }
   
+
  export  type StoryList = Story[];
   

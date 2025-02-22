@@ -5,7 +5,6 @@ import { getStoryGenerationPrompt } from "./helpers";
 import {  Story } from "./models";
 import { PaginationParams, StoryEntity, StoryMetadataForPrompt } from "./types";
 import { storyCriteriaChecks } from "./queries";
-import { notFound } from "next/navigation";
 
 
 

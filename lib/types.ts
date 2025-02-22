@@ -19,21 +19,34 @@ export type StoryMetadata = {
     highlight_color: string;
     image: string;
   };
+
   
-  export type Story = {
-    _id: string;
-    title: string;
-    date: string; // ISO format (YYYY-MM-DD)
-    main_character: string;
-    historical_event: string;
-    location: string;
-    summary: string;
-    full_story: string;
-    motivational_message: string;
-    metadata: StoryMetadata;
-    ui_metadata: StoryUIMetadata;
-    createdAt: string; // ISO timestamp
-    updatedAt: string; // ISO timestamp
+export interface StoryBase {
+  keywords: string[];
+  title: string;
+  date: string;
+  main_character: string;
+  historical_event: string;
+  location: string;
+  summary: string;
+  full_story: string;
+  motivational_message: string;
+  metadata: {
+    themes: string[];
+    keywords: string[];
+    verified: boolean;
+  };
+  ui_metadata: {
+    background_color: string;
+    font: string;
+    text_color: string;
+    highlight_color: string;
+    image: string;
+  };
+}
+
+  export interface StoryEntity extends StoryBase {
+    id: string,
   };
 
  export  interface StoryMetadataForPrompt {
@@ -43,5 +56,5 @@ export type StoryMetadata = {
   }
   
 
- export  type StoryList = Story[];
+ export  type StoryList = StoryEntity[];
   

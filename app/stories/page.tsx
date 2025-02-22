@@ -1,14 +1,18 @@
 import Stories from "@/components/story-list";
+import { Suspense } from "react";
 
 const page = async () => {
-  const NEXT_HOST = process.env.NEXT_HOST;
-
-  const resp = await fetch(`${NEXT_HOST}api/stories/`);
-  const { data } = await resp.json();
-
   return (
     <div>
-      <Stories stories={data} />
+      <Suspense
+        fallback={
+          <>
+            <h1>Loading</h1>
+          </>
+        }
+      >
+        <Stories />
+      </Suspense>
     </div>
   );
 };

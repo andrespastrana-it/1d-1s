@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Quote } from "lucide-react";
 import StoryProgress from "./story-progress";
 import ReflectionPrompt from "@/components/reflection-prompt";
-import type { Story } from "@/lib/types";
+import type { StoryEntity } from "@/lib/types";
 
-export default function StoryDetail({ story }: { story: Story }) {
+export default function StoryDetail({ story }: { story: StoryEntity }) {
   const [currentSection, setCurrentSection] = useState(0);
   const [, setShowReflection] = useState(false);
 

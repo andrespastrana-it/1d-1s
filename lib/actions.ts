@@ -1,14 +1,15 @@
+"use server"
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { getStoryGenerationPrompt } from "./helpers";
 import {  Story } from "./models";
-import { PaginationParams, StoryMetadataForPrompt } from "./types";
+import { PaginationParams, StoryEntity, StoryMetadataForPrompt } from "./types";
 import { storyCriteriaChecks } from "./queries";
+import { notFound } from "next/navigation";
 
 
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-//TODO: Fix typo error here
+
 export const isStoryDuplicated = async (story: any): Promise<boolean> => {
   const checks = [
     storyCriteriaChecks.checkTitleDateCharacter(story),
@@ -75,4 +76,22 @@ export const create_story_ai =async(key:string,metadata: StoryMetadataForPrompt[
       const parsedObjectStory = JSON.parse(text)
 
       return parsedObjectStory as unknown
+}
+
+export async function get_all_stories(): Promise<StoryEntity[]> {
+  const stories = await Story.find()
+
+  return stories.map((obj)=>obj.toJSON()) as StoryEntity[] ;
+}
+
+export async function get_story_by_id(id: string): Promise<StoryEntity> {
+  const story = await Story.findById(id); // `lean()` ensures a plain object
+  if (!story) {
+    throw new Error("Not found");
+  }
+
+return story.toJSON() as StoryEntity;
+
+
+
 }

@@ -1,31 +1,10 @@
 import mongoose, { Schema, Document, model, Model } from 'mongoose';
+import { StoryBase } from './types';
 
-// Define the TypeScript interface for the Story document
-export interface IStory extends Document {
-  keywords: string[];
-  title: string;
-  date: string;
-  main_character: string;
-  historical_event: string;
-  location: string;
-  summary: string;
-  full_story: string;
-  motivational_message: string;
-  metadata: {
-    themes: string[];
-    keywords: string[];
-    verified: boolean;
-  };
-  ui_metadata: {
-    background_color: string;
-    font: string;
-    text_color: string;
-    highlight_color: string;
-    image: string;
-  };
-}
 
-const StorySchema = new Schema<IStory>(
+export interface StoryDocument extends StoryBase, Document {}
+
+const StorySchema = new Schema<StoryDocument>(
   {
     title: { 
       type: String, 
@@ -146,5 +125,14 @@ const StorySchema = new Schema<IStory>(
 );
 
 
+StorySchema.set('toJSON', {
+  transform: (_, ret) => {
+    ret.id = ret._id.toString(); // Convert `_id` to `id`
+    delete ret._id; // Remove `_id`
+    delete ret.__v; // Remove Mongoose version key
+    return ret;
+  }
+});
+
 // Create and export the Mongoose model
-export const Story = mongoose.models.Story as Model<IStory> || model<IStory>('Story', StorySchema);
+export const Story = mongoose.models.Story as Model<StoryDocument> || model<StoryDocument>('Story', StorySchema);

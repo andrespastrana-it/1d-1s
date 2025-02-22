@@ -1,9 +1,8 @@
 import Link from "next/link";
-import type { Story, StoryList } from "@/lib/types";
-export function StoryCard({ story }: { story: Story }) {
-  console.log(story);
-
-  const { ui_metadata, title, date, summary, _id } = story;
+import type { StoryEntity, StoryList } from "@/lib/types";
+import { get_all_stories } from "@/lib/actions";
+export function StoryCard({ story }: { story: StoryEntity }) {
+  const { ui_metadata, title, date, summary, id } = story;
 
   const cardStyle = {
     backgroundColor: ui_metadata.background_color,
@@ -12,7 +11,7 @@ export function StoryCard({ story }: { story: Story }) {
   };
 
   return (
-    <Link href={`/stories/${_id}`}>
+    <Link href={`/stories/${id}`}>
       <div
         className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
         style={cardStyle}
@@ -34,11 +33,13 @@ export function StoryCard({ story }: { story: Story }) {
   );
 }
 
-export default function StoryList({ stories }: { stories: StoryList }) {
+export default async function StoryList() {
+  const stories = await get_all_stories();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {stories.map((story) => (
-        <StoryCard key={story._id} story={story} />
+        <StoryCard key={story.id} story={story} />
       ))}
     </div>
   );

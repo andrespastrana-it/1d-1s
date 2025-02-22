@@ -1,5 +1,6 @@
 import StoryDetails from "@/components/story-details";
-import type { Story } from "@/lib/types";
+import { get_story_by_id } from "@/lib/actions";
+import { IStory } from "@/lib/models";
 
 export default async function StoryDetail({
   params,
@@ -7,14 +8,9 @@ export default async function StoryDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params; // ✅ Now this works because params is a Promise
+  const data = await get_story_by_id(id);
 
-  const NEXT_HOST = process.env.NEXT_HOST;
-
-  // Get the story details
-  const resp = await fetch(`${NEXT_HOST}api/stories/${id}`);
-
-  const { data } = await resp.json();
-  const { ui_metadata } = data as Story;
+  const { ui_metadata } = data as IStory;
 
   const pageStyle = {
     backgroundColor: ui_metadata.background_color,

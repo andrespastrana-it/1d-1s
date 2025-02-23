@@ -1,4 +1,5 @@
 "use server";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
@@ -11,23 +12,89 @@ import dbConnect from "./db";
 
 // Check if a story is duplicated based on certain criteria
 export const isStoryDuplicated = async (story: StoryZod): Promise<boolean> => {
-  const checks = [
-    storyCriteriaChecks.checkTitleDateCharacter(story),
-    storyCriteriaChecks.checkEventLocation(story),
-    storyCriteriaChecks.checkTitleKeywords(story),
-    storyCriteriaChecks.checkTitleMotivationalMessage(story),
-    storyCriteriaChecks.checkLocationSummary(story),
-    storyCriteriaChecks.checkKeywordsMainCharacter(story),
-    storyCriteriaChecks.checkTitleFullStory(story),
-    storyCriteriaChecks.checkEventMotivationalMessage(story),
-    storyCriteriaChecks.checkEventLocationSummary(story),
-    storyCriteriaChecks.checkDateKeywords(story),
-    storyCriteriaChecks.checkEventLocationMessage(story),
+  // Define each criteria with its name, function, and the fields it checks.
+  // TODO: Refactor
+  const criteria = [
+    {
+      name: "checkTitleDateCharacter",
+      fn: storyCriteriaChecks.checkTitleDateCharacter,
+      fields: ["title", "date", "main_character"],
+    },
+    {
+      name: "checkEventLocation",
+      fn: storyCriteriaChecks.checkEventLocation,
+      fields: ["historical_event", "location"],
+    },
+    {
+      name: "checkTitleKeywords",
+      fn: storyCriteriaChecks.checkTitleKeywords,
+      fields: ["title", "metadata.keywords"],
+    },
+    {
+      name: "checkTitleMotivationalMessage",
+      fn: storyCriteriaChecks.checkTitleMotivationalMessage,
+      fields: ["title", "motivational_message"],
+    },
+    {
+      name: "checkLocationSummary",
+      fn: storyCriteriaChecks.checkLocationSummary,
+      fields: ["location", "summary"],
+    },
+    {
+      name: "checkKeywordsMainCharacter",
+      fn: storyCriteriaChecks.checkKeywordsMainCharacter,
+      fields: ["main_character", "metadata.keywords"],
+    },
+    {
+      name: "checkTitleFullStory",
+      fn: storyCriteriaChecks.checkTitleFullStory,
+      fields: ["title", "full_story"],
+    },
+    {
+      name: "checkEventMotivationalMessage",
+      fn: storyCriteriaChecks.checkEventMotivationalMessage,
+      fields: ["historical_event", "motivational_message"],
+    },
+    {
+      name: "checkEventLocationSummary",
+      fn: storyCriteriaChecks.checkEventLocationSummary,
+      fields: ["historical_event", "location", "summary"],
+    },
+    {
+      name: "checkDateKeywords",
+      fn: storyCriteriaChecks.checkDateKeywords,
+      fields: ["date", "metadata.keywords"],
+    },
+    {
+      name: "checkEventLocationMessage",
+      fn: storyCriteriaChecks.checkEventLocationMessage,
+      fields: ["historical_event", "location", "motivational_message"],
+    },
   ];
 
-  const results = await Promise.all(checks);
+  // Execute all criteria functions in parallel.
+  const results = await Promise.all(criteria.map(item => item.fn(story)));
 
-  return results.some((result) => result === true);
+  // Log the details of any criteria that returned true (i.e. a duplicate was detected)
+  results.forEach((result, index) => {
+    if (result) {
+      const { name, fields } = criteria[index];
+
+      // Build an object mapping field names to their values.
+      const failedFields = fields.reduce<Record<string, unknown>>((acc, field) => {
+        // Support nested fields using dot-notation.
+        const value = field
+          .split('.')
+          .reduce((obj: Record<string, any>, key: string) => obj[key], story as Record<string, any>);
+        acc[field] = value;
+        return acc;
+      }, {});
+      console.log(`Criteria "${name}" detected a duplicate with the following fields:`, failedFields);
+    }
+  });
+
+  // Return true if any of the criteria checks returned true.
+  return results.some(result => result === true);
 };
 
 // Get paginated metadata of stories

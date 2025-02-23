@@ -1,6 +1,5 @@
 import Link from "next/link";
-import type { StoryEntity, StoryList } from "@/lib/types";
-import { get_all_stories } from "@/lib/actions";
+import type { StoryEntity } from "@/lib/types";
 export function StoryCard({ story }: { story: StoryEntity }) {
   const { ui_metadata, title, date, summary, id } = story;
 
@@ -30,17 +29,5 @@ export function StoryCard({ story }: { story: StoryEntity }) {
         </div>
       </div>
     </Link>
-  );
-}
-
-export default async function StoryList() {
-  const stories = await get_all_stories();
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {stories.map((story) => (
-        <StoryCard key={story.id} story={story} />
-      ))}
-    </div>
   );
 }

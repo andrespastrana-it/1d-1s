@@ -1,33 +1,63 @@
 import Link from "next/link";
-import type { StoryEntity } from "@/lib/types";
-export function StoryCard({ story }: { story: StoryEntity }) {
-  const { ui_metadata, title, date, summary, id } = story;
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { CalendarIcon, MapPinIcon } from "lucide-react";
+import { StoryEntity } from "@/lib/types";
+import Image from "next/image";
 
-  const cardStyle = {
-    backgroundColor: ui_metadata.background_color,
-    color: ui_metadata.text_color,
-    fontFamily: ui_metadata.font,
-  };
+interface StoryCardProps {
+  story: StoryEntity;
+}
 
+export function StoryCard({ story }: StoryCardProps) {
   return (
-    <Link href={`/stories/${id}`}>
-      <div
-        className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-        style={cardStyle}
-      >
-        {/* <Image
-          src={ui_metadata.image || "/placeholder.svg"}
-          alt={title}
-          width={400}
-          height={200}
-          className="w-full h-48 object-cover"
-        /> */}
-        <div className="p-4">
-          <h2 className="text-xl font-bold mb-2">{title}</h2>
-          <p className="text-sm mb-2">{date}</p>
-          <p className="text-sm">{summary}</p>
-        </div>
+    <Card className="overflow-hidden">
+      <div className="aspect-video w-full overflow-hidden">
+        <Image
+          src={story.ui_metadata.image || "/placeholder.svg"}
+          alt={story.title}
+          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+        />
       </div>
-    </Link>
+      <CardHeader>
+        <div className="flex items-center gap-2 mb-2">
+          <Badge variant="secondary">{story.metadata.themes[0]}</Badge>
+          <span className="text-xs text-muted-foreground">
+            <CalendarIcon className="inline-block w-3 h-3 mr-1" />
+            {story.date}
+          </span>
+        </div>
+        <CardTitle className="line-clamp-2">{story.title}</CardTitle>
+        <CardDescription className="line-clamp-2">
+          {story.summary}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <MapPinIcon className="w-4 h-4" />
+          <span>{story.location}</span>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <div className="flex flex-wrap gap-1">
+          {story.metadata.keywords.slice(0, 3).map((keyword, index) => (
+            <Badge key={index} variant="outline">
+              {keyword}
+            </Badge>
+          ))}
+        </div>
+        <Button variant="ghost" size="sm" asChild>
+          <Link href={`/stories/${story.id}`}>Read More</Link>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

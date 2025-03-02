@@ -139,7 +139,7 @@ export const create_story_ai = async (key: string, metadata: StoryMetadataForPro
   return parsedObjectStory;
 };
 
-// Get all stories from the database
+// All the functions to recive a sort filter 
 export async function get_all_stories(): Promise<StoryEntity[]> {
   await dbConnect();
   const stories = await Story.find();

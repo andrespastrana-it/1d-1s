@@ -22,7 +22,7 @@ export type StoryMetadata = {
 
   
 export interface StoryBase {
-  keywords: string[];
+
   title: string;
   date: string;
   main_character: string;

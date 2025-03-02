@@ -4,6 +4,8 @@ import { StoryBase } from './types';
 
 export interface StoryDocument extends StoryBase, Document {}
 
+// TODO: Add story (autocreate) number to the schema
+
 const StorySchema = new Schema<StoryDocument>(
   {
     title: { 

@@ -22,6 +22,8 @@ export function StoryCard({ story }: StoryCardProps) {
     <Card className="overflow-hidden">
       <div className="aspect-video w-full overflow-hidden">
         <Image
+          width={800}
+          height={500}
           src={story.ui_metadata.image || "/placeholder.svg"}
           alt={story.title}
           className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"

@@ -70,6 +70,8 @@ export default async function StoryPage({
 
           <div className="aspect-video w-full overflow-hidden rounded-lg">
             <Image
+              width={800}
+              height={500}
               src={story.ui_metadata.image || "/placeholder.svg"}
               alt={story.title}
               className="object-cover w-full h-full"

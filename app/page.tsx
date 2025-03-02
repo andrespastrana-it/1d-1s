@@ -43,6 +43,8 @@ export default async function Home() {
             </div>
             <div className="mx-auto w-full max-w-[500px] aspect-video relative rounded-xl overflow-hidden shadow-xl">
               <Image
+                width={800}
+                height={500}
                 src="/placeholder.svg?height=500&width=800"
                 alt="Daily Tales"
                 className="object-cover w-full h-full"
@@ -58,7 +60,7 @@ export default async function Home() {
 
       {/* Featured Stories */}
       <section className="w-full py-12 md:py-24 bg-background">
-        <div className="container px-4 md:px-6">
+        <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <Badge variant="outline" className="px-3 py-1">
@@ -91,7 +93,7 @@ export default async function Home() {
 
       {/* Categories Section */}
       <section className="w-full py-12 md:py-24 bg-muted">
-        <div className="container px-4 md:px-6">
+        <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -112,6 +114,8 @@ export default async function Home() {
               >
                 <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-colors duration-300"></div>
                 <Image
+                  width={300}
+                  height={300}
                   src={`/placeholder.svg?height=300&width=300&text=${category}`}
                   alt={category}
                   className="w-full aspect-square object-cover"
@@ -129,7 +133,7 @@ export default async function Home() {
 
       {/* Newsletter Section */}
       <section className="w-full py-12 md:py-24 bg-background">
-        <div className="container px-4 md:px-6">
+        <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

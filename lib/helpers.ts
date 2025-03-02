@@ -6,11 +6,17 @@ export function getStoryGenerationPrompt(existingMetadata: StoryMetadataForPromp
   const existingKeywords = existingMetadata.map(story => story.keywords.join(', ')).join(', ');
   const existingCharacters = existingMetadata.map(story => story.main_character).join(', ');
 
-  const prompt = `Generate a motivational story based on a real historical event. Do not use any of the following attributes that already exist in the database:\n\n
+  const prompt = `Generate a motivational story based on a lesser-known or obscure real historical event. Focus on uncovering hidden gems from history that most people aren't familiar with. Do not use any of the following attributes that already exist in the database:\n\n
   Existing Titles: ${existingTitles}\n
   Existing Keywords: ${existingKeywords}\n
   Existing Main Characters: ${existingCharacters}\n
   Ensure the story you generate is unique and does not overlap with these existing elements.
+
+  IMPORTANT GUIDELINES:
+  - Choose historical figures who aren't commonly featured in popular culture or standard history textbooks
+  - Focus on events from different cultures, time periods, and geographical regions
+  - The story should be historically accurate but with an inspiring angle
+  - Include interesting historical context that provides educational value
 
   Please return the story in the following JSON format:
   {
@@ -25,7 +31,7 @@ export function getStoryGenerationPrompt(existingMetadata: StoryMetadataForPromp
     "metadata": {
       "themes": ["<list_of_key_themes>"],
       "keywords": ["<list_of_keywords_related_to_the_story>"],
-      "verified": <true_or_false>
+      "verified": <true_or_false>,
     },
     "ui_metadata": {
       "background_color": "<hex_color_code_for_background>",

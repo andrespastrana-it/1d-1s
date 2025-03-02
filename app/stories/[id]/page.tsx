@@ -29,9 +29,6 @@ import { AIBanner } from "@/components/ai-banner";
 import { get_story_by_id } from "@/lib/actions";
 import Image from "next/image";
 
-
-// This would be replaced with an actual data fetching function
-export const revalidate = 3600; // 1 hour in seconds
 export default async function StoryPage({
   params,
 }: {

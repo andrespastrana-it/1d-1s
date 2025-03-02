@@ -12,6 +12,7 @@ import { Filter } from "lucide-react";
 import { AIBanner } from "@/components/ai-banner";
 import { get_all_stories } from "@/lib/actions";
 
+export const revalidate = 3600; // 1 hour in seconds
 export default async function StoriesPage() {
   const stories = await get_all_stories();
 

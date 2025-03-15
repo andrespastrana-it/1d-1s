@@ -1,9 +1,10 @@
 "use server";
 import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
+
 import {
   Heart,
   MessageCircle,
@@ -13,7 +14,6 @@ import {
   Linkedin,
   Copy,
   ArrowLeft,
-  Send,
   CalendarIcon,
   MapPinIcon,
 } from "lucide-react";
@@ -28,6 +28,9 @@ import { AIBanner } from "@/components/ai-banner";
 
 import { get_story_by_id } from "@/lib/actions";
 import Image from "next/image";
+import { NewCommentForm } from "@/components/comments/new-comment-form";
+import { Comments } from "@/components/comments/comments";
+import { Suspense } from "react";
 
 export default async function StoryPage({
   params,
@@ -202,36 +205,14 @@ export default async function StoryPage({
           <div>
             <h2 className="text-2xl font-bold mb-6">Comments ({[].length})</h2>
             <div className="flex items-start gap-4 mb-8">
-              <div className="flex-1">
-                <Textarea
-                  placeholder="Add a comment..."
-                  value={""}
-                  // onChange={(e) => {}}
-                  className="mb-2 resize-none"
-                />
-                <Button
-                  // onClick={handleComment}
-                  className="flex items-center gap-2"
-                >
-                  <Send className="h-4 w-4" />
-                  Post Comment
-                </Button>
-              </div>
+              <NewCommentForm />
             </div>
 
             <div className="space-y-6">
-              {/* {[].map((comment) => (
-                <div key={comment.id} className="flex items-start gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(comment.date).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <p className="text-sm mb-2">{comment.text}</p>
-                  </div>
-                </div>
-              ))} */}
+              <h2>Comments </h2>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Comments storyId={id} />
+              </Suspense>
             </div>
           </div>
         </div>

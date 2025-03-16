@@ -144,13 +144,23 @@ export const create_story_ai = async (
     compatibility: "strict",
   });
 
+  console.log("Generating story with OpenAI...");
+  const prompt = getStoryGenerationPrompt(metadata);
+  console.log("Prompt:");
+  console.log(prompt);
+
   const { text } = await generateText({
-    model: openai("gpt-4o-mini"),
-    prompt: getStoryGenerationPrompt(metadata),
+    model: openai("gpt-4o-2024-11-20"),
+    prompt,
   });
+
+  console.log("Open ai response:", text);
+  console.log(text);
 
   // Parse the generated story text into an object
   const parsedObjectStory = JSON.parse(text);
+  console.log(parsedObjectStory);
+
   return parsedObjectStory;
 };
 

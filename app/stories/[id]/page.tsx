@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 import {
-  Heart,
   MessageCircle,
   Share2,
   Facebook,
@@ -31,6 +30,7 @@ import Image from "next/image";
 import { NewCommentForm } from "@/components/comments/new-comment-form";
 import { Comments } from "@/components/comments/comments";
 import { Suspense } from "react";
+import { LikeContainer } from "@/components/likes/LikesContainer";
 
 export default async function StoryPage({
   params,
@@ -89,27 +89,8 @@ export default async function StoryPage({
 
           <div className="flex items-center justify-between pt-6">
             <div className="flex items-center gap-6">
-              <button
-                className="flex items-center gap-2 group"
-                // onClick={handleLike}
-              >
-                <Heart
-                  className={`h-5 w-5 ${
-                    true
-                      ? "fill-red-500 text-red-500"
-                      : "group-hover:text-red-500 text-muted-foreground"
-                  }`}
-                />
-                <span
-                  className={`${
-                    false
-                      ? "text-red-500"
-                      : "text-muted-foreground group-hover:text-red-500"
-                  }`}
-                >
-                  {0}
-                </span>
-              </button>
+              {/* Likes */}
+              <LikeContainer storyId={id} />
               <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
                 <MessageCircle className="h-5 w-5" />
                 <span>{[].length}</span>

@@ -1,13 +1,15 @@
 import Cors from "cors";
 import { Story } from "@/lib/models";
 import { validateStory } from "@/lib/validations";
-import { create_story_ai, getPaginatedStoriesMetadata, isStoryDuplicated } from "@/lib/actions";
+import {
+  create_story_ai,
+  getPaginatedStoriesMetadata,
+  isStoryDuplicated,
+} from "@/lib/actions";
 import type { NextApiRequest, NextApiResponse } from "next";
-
 
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 
 // Initialize the cors middleware
 const cors = Cors({
@@ -36,8 +38,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.time("answer time");
-
     // Run the middleware
     await runMiddleware(req, res, cors);
 
@@ -45,24 +45,42 @@ export default async function handler(
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
     // Validate the authorization headers
-    if (!CRON_KEY || req.headers.authorization !== CRON_KEY || !OPENAI_API_KEY) {
-      return res.status(401).json({ success: false, error: "Unauthorized: Invalid credentials or missing API key" });
+    if (
+      !CRON_KEY ||
+      req.headers.authorization !== CRON_KEY ||
+      !OPENAI_API_KEY
+    ) {
+      return res.status(401).json({
+        success: false,
+        error: "Unauthorized: Invalid credentials or missing API key",
+      });
     }
+    console.log("Generating new story...");
 
     let isReadyToSave = false;
     let uniqueStory = null;
-    let attemptCount = 0; 
-     const maxAttempts =3
+    let attemptCount = 0;
+    const maxAttempts = 3;
     // Add a counter to track attempts
 
     // Limit attempts to 3 for generating a unique, non-duplicated story
     while (!isReadyToSave && attemptCount < maxAttempts) {
       attemptCount++;
 
-      const usedStories = await getPaginatedStoriesMetadata({ page: 1, pageSize: 10 });
+      const usedStories = await getPaginatedStoriesMetadata({
+        page: 1,
+        pageSize: 10,
+      });
+      console.log("Used stories:");
+      console.log(usedStories);
+
       const newStoryFromAi = await create_story_ai(OPENAI_API_KEY, usedStories);
+      console.log("New story attempt:");
+      console.log(newStoryFromAi);
 
       const validatedStoryShape = validateStory(newStoryFromAi);
+      console.log("Validated story shape:");
+      console.log(validatedStoryShape);
 
       // Check if the story is duplicated in the database
       const isDuplicated = await isStoryDuplicated(validatedStoryShape);
@@ -71,7 +89,11 @@ export default async function handler(
         uniqueStory = validatedStoryShape;
       }
 
-      console.log(`Attempt ${attemptCount}: ${isDuplicated ? "Duplicate found" : "Unique story found"}`);
+      console.log(
+        `Attempt ${attemptCount}: ${
+          isDuplicated ? "Duplicate found" : "Unique story found"
+        }`
+      );
     }
 
     if (uniqueStory && isReadyToSave) {
@@ -81,13 +103,20 @@ export default async function handler(
 
       return res.json({ success: true, error: false, data: uniqueStory });
     }
+    console.log("Here !");
 
     // If we reach the maximum number of attempts and still don't have a valid story, return an error
-    console.timeEnd("answer time");
-    return res.json({ success: false, error: "Error creating new history after 3 attempts", data: null });
 
+    return res.json({
+      success: false,
+      error: "Error creating new history after 3 attempts",
+      data: null,
+    });
   } catch (error) {
     console.error("Error processing request:", error);
-    return res.status(500).json({ success: false, error: "Internal server error. Please try again later." });
+    return res.status(500).json({
+      success: false,
+      error: "Internal server error. Please try again later.",
+    });
   }
 }

@@ -5,10 +5,12 @@ const storySchema = z.object({
   date: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .refine((val) => !isNaN(Date.parse(val)), { message: "Invalid date format" }),
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: "Invalid date format",
+    }),
   main_character: z.string().min(1).max(50),
   historical_event: z.string().min(1).max(100),
-  location: z.string(),  // Assuming optional for now, modify if needed
+  location: z.string(), // Assuming optional for now, modify if needed
   summary: z.string().min(10).max(500),
   full_story: z.string().min(50).max(5000),
   motivational_message: z.string().min(10).max(300),
@@ -22,23 +24,25 @@ const storySchema = z.object({
     font: z.string().min(3).max(50),
     text_color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
     highlight_color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
-    image: z.string().url().refine((url) => /\.(jpg|jpeg|png|gif)$/i.test(url), {
-      message: "Invalid image URL",
-    }),
+    image: z
+      .string()
+      .url()
+      .refine((url) => /\.(jpg|jpeg|png|gif)$/i.test(url), {
+        message: "Invalid image URL",
+      }),
   }),
 });
-
-
 
 export type Story = z.infer<typeof storySchema>;
 
 export const validateStory = (data: unknown) => {
   const result = storySchema.safeParse(data);
   if (result.success) {
+    console.log("Successfully validated story data");
     return result.data as Story;
-  }  
-  
-  throw new Error(`Invalid story data ${ result.error.format()}`)
+  }
 
+  console.log(result.error.flatten().fieldErrors);
 
+  throw new Error(`Invalid story data ${result.error.format()}`);
 };

@@ -133,6 +133,11 @@ const StorySchema = new Schema<StoryDocument>(
         ],
       },
     },
+    likes: {
+      type: [String],
+      required: false,
+      default: [],
+    },
   },
   {
     timestamps: true,

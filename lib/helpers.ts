@@ -1,10 +1,18 @@
-import {  StoryMetadataForPrompt } from "./types";
+import { StoryMetadataForPrompt } from "./types";
 
-export function getStoryGenerationPrompt(existingMetadata: StoryMetadataForPrompt[]) {
+export function getStoryGenerationPrompt(
+  existingMetadata: StoryMetadataForPrompt[]
+) {
   // Prepare existing metadata for use in the prompt
-  const existingTitles = existingMetadata.map(story => story.title).join(', ');
-  const existingKeywords = existingMetadata.map(story => story.keywords.join(', ')).join(', ');
-  const existingCharacters = existingMetadata.map(story => story.main_character).join(', ');
+  const existingTitles = existingMetadata
+    .map((story) => story.title)
+    .join(", ");
+  const existingKeywords = existingMetadata
+    .map((story) => story.keywords.join(", "))
+    .join(", ");
+  const existingCharacters = existingMetadata
+    .map((story) => story.main_character)
+    .join(", ");
 
   const prompt = `Generate a motivational story based on a lesser-known or obscure real historical event. Focus on uncovering hidden gems from history that most people aren't familiar with. Do not use any of the following attributes that already exist in the database:\n\n
   Existing Titles: ${existingTitles}\n
@@ -46,7 +54,10 @@ export function getStoryGenerationPrompt(existingMetadata: StoryMetadataForPromp
   - Ensure not to return duplicated keys.
   - Ensure to trim any additional characters. Just return the string with a valid JSON format.
   - Ensure the JSON output is valid and can be parsed using JSON.parse().
-  - Do not include any additional information outside the JSON structure.`;
-  
+  - Do not include any additional information outside the JSON structure.
+  - Do not include any comments or additional text outside the JSON structure.-
+  - Do not include any backticks or triple quotes in the JSON structure. 
+  `;
+
   return prompt;
 }

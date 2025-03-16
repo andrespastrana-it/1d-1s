@@ -40,6 +40,7 @@ export interface StoryBase {
     highlight_color: string;
     image: string;
   };
+  likes: string[];
 }
 
 export interface StoryEntity extends StoryBase {
@@ -86,3 +87,12 @@ export interface FormComments {
 export interface CommentEntity extends CommentType {
   id: string;
 }
+
+// Story Likes Status
+
+export type StoryLikeStatus = {
+  isLiked: boolean;
+  likeCount: number;
+  authenticated?: boolean;
+  error?: string;
+};
